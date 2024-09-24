@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>チャットアプリ</title>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const socket = io();
+
+            socket.on('message', (msg) => {
+                const messageList = document.getElementById('messages');
+                const li = document.createElement('li');
+                li.textContent = msg;
+                messageList.appendChild(li);
+            });
+
+            document.getElementById('sendBtn').addEventListener('click', () => {
+                const input = document.getElementById('messageInput');
+                socket.send(input.value);
+                input.value = '';
+            });
+        });
+    </script>
+</head>
+<body>
+    <ul id="messages"></ul>
+    <input id="messageInput" type="text" placeholder="メッセージを入力">
+    <button id="sendBtn">送信</button>
+</body>
+</html>
